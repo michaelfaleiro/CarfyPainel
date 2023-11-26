@@ -6,8 +6,9 @@ namespace Api.Services.Orcamentos
     {
         Task<Orcamento> CreateOrcamento(Orcamento orcamento);
         Task<List<Orcamento>> GetOrcamentos(int take, int skip);
-        Task<Orcamento> GetByIdOrcamento(Guid id);
-
-        Task<Orcamento> AddProdutoOrcamento(Guid id, Produto produto);
+        Task<Orcamento?> GetByIdOrcamento(Guid id);
+        Task<bool> RemoveOrcamento(Orcamento orcamento);
+        Task<Orcamento?> AddProdutoOrcamento(Guid id, Produto produto);
+        Task<Produto?> RemoveProdutoOrcamento(Guid id);
     }
 }

@@ -9,6 +9,7 @@ namespace Api.Profiles
         public ProdutoProfile()
         {
             CreateMap<CreateProdutoDto, Produto>();
+            CreateMap<RemoveProdutoOrcamentoDto, Produto>();
         }
     }
 }
