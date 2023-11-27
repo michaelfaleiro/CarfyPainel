@@ -127,15 +127,14 @@ namespace Api.Controllers
             }
         }
 
-        [HttpPost("v1/api/orcamentos/removeproduto/")]
+        [HttpDelete("v1/api/orcamentos/removeproduto/{id:guid}")]
 
-        public async Task<ActionResult> RemoveProdutoOrcamento([FromBody] RemoveProdutoOrcamentoDto model)
+        public async Task<ActionResult> RemoveProdutoOrcamento([FromRoute] Guid id)
         {
-            var produto = _mapper.Map<Produto>(model);
 
             try
             {
-                await _service.RemoveProdutoOrcamento(produto.Id);
+                await _service.RemoveProdutoOrcamento(id);
 
                 return NoContent();
             }

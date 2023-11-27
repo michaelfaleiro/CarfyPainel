@@ -21,6 +21,7 @@ namespace Api.Services.Orcamentos
         {
             Orcamento? orcamento = await _context
                 .Orcamentos
+                .Include(x => x.Produtos)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             return orcamento;

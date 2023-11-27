@@ -4,7 +4,7 @@ namespace Api.Models
     {
         public Guid Id { get; set; }
         public string? Sku { get; set; }
-        public string NomeProduto { get; set; }
+        public string NomeProduto { get; set; } = string.Empty;
         public string? Marca { get; set; }
         public double PrecoCusto { get; set; } = 0;
         public double PrecoVenda { get; set; } = 0;
