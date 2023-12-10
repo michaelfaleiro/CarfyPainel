@@ -3,6 +3,7 @@ namespace Api.Models
     public class Produto
     {
         public Guid Id { get; set; }
+        public int Quantidade { get; set; }
         public string? Sku { get; set; }
         public string NomeProduto { get; set; } = string.Empty;
         public string? Marca { get; set; }

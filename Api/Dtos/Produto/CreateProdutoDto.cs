@@ -4,6 +4,8 @@ namespace Api.Dtos.Produto
 {
     public class CreateProdutoDto
     {
+        [Range(1, int.MaxValue, ErrorMessage = "A quantidade deve ser maior que 0")]
+        public int Quantidade { get; set; }
         public string? Sku { get; set; }
         [Required(ErrorMessage = "Informe o Nome do Produto")]
         public string NomeProduto { get; set; }

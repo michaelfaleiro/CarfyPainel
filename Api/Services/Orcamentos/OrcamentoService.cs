@@ -19,12 +19,14 @@ namespace Api.Services.Orcamentos
 
         public async Task<Orcamento?> GetByIdOrcamento(Guid id)
         {
+
             Orcamento? orcamento = await _context
-                .Orcamentos
-                .Include(x => x.Produtos)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            .Orcamentos
+            .Include(x => x.Produtos)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
             return orcamento;
+
         }
 
         public async Task<List<Orcamento>> GetOrcamentos(int take, int skip)

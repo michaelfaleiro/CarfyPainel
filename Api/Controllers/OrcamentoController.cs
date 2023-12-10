@@ -28,11 +28,11 @@ namespace Api.Controllers
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, ("Não foi possível Salvar!"));
+                return StatusCode(500, "Não foi possível Salvar!");
             }
             catch
             {
-                return StatusCode(500, ("Falha Interna no Servidor"));
+                return StatusCode(500, "Falha Interna no Servidor");
             }
         }
 
@@ -47,11 +47,11 @@ namespace Api.Controllers
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, ("Não foi possível Buscar os Dados!"));
+                return StatusCode(500, "Não foi possível Buscar os Dados!");
             }
             catch
             {
-                return StatusCode(500, ("Falha Interna no Servidor"));
+                return StatusCode(500, "Falha Interna no Servidor");
             }
         }
 
@@ -72,11 +72,11 @@ namespace Api.Controllers
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, ("Não foi possível Buscar os Dados!"));
+                return StatusCode(500, "Não foi possível Buscar os Dados!");
             }
             catch
             {
-                return StatusCode(500, ("Falha Interna no Servidor"));
+                return StatusCode(500, "Falha Interna no Servidor");
             }
         }
 
@@ -98,11 +98,11 @@ namespace Api.Controllers
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, ("Erro ao remover Orcamento!"));
+                return StatusCode(500, "Erro ao remover Orcamento!");
             }
             catch
             {
-                return StatusCode(500, ("Falha Interna no Servidor"));
+                return StatusCode(500, "Falha Interna no Servidor");
             }
         }
 
@@ -119,11 +119,11 @@ namespace Api.Controllers
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, ("Não foi possível Adicionar o Produto!"));
+                return StatusCode(500, "Não foi possível Adicionar o Produto!");
             }
             catch
             {
-                return StatusCode(500, ("Falha Interna no Servidor"));
+                return StatusCode(500, "Falha Interna no Servidor");
             }
         }
 
@@ -140,11 +140,11 @@ namespace Api.Controllers
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, ("Não foi possível Remover o Produto!"));
+                return StatusCode(500, "Não foi possível Remover o Produto!");
             }
             catch
             {
-                return StatusCode(500, ("Falha Interna no Servidor"));
+                return StatusCode(500, "Falha Interna no Servidor");
             }
 
         }
