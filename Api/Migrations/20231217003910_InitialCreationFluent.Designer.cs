@@ -4,6 +4,7 @@ using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(DbApiContext))]
-    partial class DbApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231217003910_InitialCreationFluent")]
+    partial class InitialCreationFluent
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +76,7 @@ namespace Api.Migrations
                         .HasColumnName("DataCriacao");
 
                     b.Property<string>("Link")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("Link");
 
                     b.Property<string>("Marca")
@@ -88,18 +91,18 @@ namespace Api.Migrations
                         .HasColumnName("NomeProduto");
 
                     b.Property<string>("Observacao")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("Observacao");
 
                     b.Property<Guid?>("OrcamentoId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("PrecoCusto")
-                        .HasColumnType("MONEY")
+                        .HasColumnType("DECIMAL")
                         .HasColumnName("PrecoCusto");
 
                     b.Property<decimal>("PrecoVenda")
-                        .HasColumnType("MONEY")
+                        .HasColumnType("DECIMAL")
                         .HasColumnName("PrecoVenda");
 
                     b.Property<int>("Quantidade")

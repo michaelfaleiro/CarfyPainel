@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(DbApiContext))]
-    [Migration("20231125002432_initialmigrations")]
-    partial class initialmigrations
+    [Migration("20231217012213_AlteradoCampoPreco")]
+    partial class AlteradoCampoPreco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,25 +32,37 @@ namespace Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Chassi")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(17)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("Chassi");
 
                     b.Property<string>("Cliente")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("NVARCHAR")
+                        .HasColumnName("Cliente");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("SMALLDATETIME")
+                        .HasColumnName("DataCriacao");
 
                     b.Property<string>("Placa")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(8)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("Placa");
 
                     b.Property<string>("Veiculo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("Veiculo");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orcamentos");
+                    b.HasIndex(new[] { "Cliente" }, "IX_Orcamento_Cliente")
+                        .IsUnique();
+
+                    b.ToTable("Orcamento", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.Produto", b =>
@@ -60,45 +72,64 @@ namespace Api.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("SMALLDATETIME")
+                        .HasColumnName("DataCriacao");
 
                     b.Property<string>("Link")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Link");
 
                     b.Property<string>("Marca")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("Marca");
 
                     b.Property<string>("NomeProduto")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(180)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("NomeProduto");
 
                     b.Property<string>("Observacao")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Observacao");
 
                     b.Property<Guid?>("OrcamentoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<double>("PrecoCusto")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PrecoCusto")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("PrecoCusto");
 
-                    b.Property<double>("PrecoVenda")
-                        .HasColumnType("float");
+                    b.Property<decimal>("PrecoVenda")
+                        .HasColumnType("MONEY")
+                        .HasColumnName("PrecoVenda");
+
+                    b.Property<int>("Quantidade")
+                        .HasColumnType("INT")
+                        .HasColumnName("Quantidade");
 
                     b.Property<string>("Sku")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("Sku");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrcamentoId");
 
-                    b.ToTable("Produtos");
+                    b.ToTable("Produto", (string)null);
                 });
 
             modelBuilder.Entity("Api.Models.Produto", b =>
                 {
-                    b.HasOne("Api.Models.Orcamento", null)
+                    b.HasOne("Api.Models.Orcamento", "Orcamento")
                         .WithMany("Produtos")
-                        .HasForeignKey("OrcamentoId");
+                        .HasForeignKey("OrcamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("FK_Produto_Orcamento");
+
+                    b.Navigation("Orcamento");
                 });
 
             modelBuilder.Entity("Api.Models.Orcamento", b =>

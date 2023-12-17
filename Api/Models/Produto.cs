@@ -11,9 +11,7 @@ namespace Api.Models
         public double PrecoVenda { get; set; } = 0;
         public string? Link { get; set; }
         public string? Observacao { get; set; }
-        public Guid OrcamentoId { get; set; }
         public Orcamento? Orcamento { get; set; }
-
         public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
     }
 }

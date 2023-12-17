@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Services.Orcamentos
 {
-    public class OrcamentoService(DbApiContext context) : IOrcamentoInteface
+    public class OrcamentoService(DbApiContext context) : IOrcamentoService
     {
         private readonly DbApiContext _context = context;
 
@@ -20,22 +20,22 @@ namespace Api.Services.Orcamentos
         public async Task<Orcamento?> GetByIdOrcamento(Guid id)
         {
 
-            Orcamento? orcamento = await _context
+            var orcamento = await _context
             .Orcamentos
+            .AsNoTracking()
             .Include(x => x.Produtos)
             .FirstOrDefaultAsync(x => x.Id == id);
 
             return orcamento;
-
         }
 
         public async Task<List<Orcamento>> GetOrcamentos(int take, int skip)
         {
-            List<Orcamento> orcamentos = await _context.Orcamentos
-                .Include(x => x.Produtos)
+            var orcamentos = await _context.Orcamentos
                 .AsNoTracking()
                 .Skip(skip)
                 .Take(take)
+                .Include(x => x.Produtos)
                 .ToListAsync();
 
             return orcamentos;
@@ -51,38 +51,34 @@ namespace Api.Services.Orcamentos
 
         public async Task<Orcamento?> AddProdutoOrcamento(Guid id, Produto produto)
         {
-            Orcamento? orcamento = await _context.Orcamentos
-                .Include(x => x.Produtos)
+            var orcamento = await _context.Orcamentos
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (orcamento is not null)
+            if (orcamento is null)
             {
-                orcamento.Produtos?.Add(produto);
-
-                await _context.SaveChangesAsync();
-
-                return orcamento;
+                return null;
             }
 
-            return null;
+            orcamento.Produtos?.Add(produto);
+            await _context.SaveChangesAsync();
+
+            return orcamento;
         }
 
-
-        async Task<Produto?> IOrcamentoInteface.RemoveProdutoOrcamento(Guid id)
+        public async Task<Produto?> RemoveProdutoOrcamento(Guid id)
         {
-            Produto? produto = await _context.Produtos
+            var produto = await _context.Produtos
                 .FirstOrDefaultAsync(x => x.Id == id);
 
-            if (produto is not null)
+            if (produto is null)
             {
-                _context.Produtos.Remove(produto);
-                await _context.SaveChangesAsync();
-                return produto;
+                return null;
             }
 
-            return null;
+            _context.Produtos.Remove(produto);
+            await _context.SaveChangesAsync();
+            
+            return produto;
         }
-
-
     }
 }

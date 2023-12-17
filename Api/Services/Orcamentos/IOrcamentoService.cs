@@ -2,7 +2,7 @@ using Api.Models;
 
 namespace Api.Services.Orcamentos
 {
-    public interface IOrcamentoInteface
+    public interface IOrcamentoService
     {
         Task<Orcamento> CreateOrcamento(Orcamento orcamento);
         Task<List<Orcamento>> GetOrcamentos(int take, int skip);

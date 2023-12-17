@@ -21,7 +21,7 @@ builder.Services.AddDbContext<DbApiContext>(
 );
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-builder.Services.AddScoped<IOrcamentoInteface, OrcamentoService>();
+builder.Services.AddScoped<IOrcamentoService, OrcamentoService>();
 
 
 var app = builder.Build();

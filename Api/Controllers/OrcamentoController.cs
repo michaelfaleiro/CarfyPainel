@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore;
 namespace Api.Controllers
 {
     [ApiController]
-    public class OrcamentoController(IMapper mapper, IOrcamentoInteface orcamentoInteface) : ControllerBase
+    public class OrcamentoController(IMapper mapper, IOrcamentoService orcamentoService) : ControllerBase
     {
 
         private readonly IMapper _mapper = mapper;
-        private readonly IOrcamentoInteface _service = orcamentoInteface;
+        private readonly IOrcamentoService _service = orcamentoService;
 
         [HttpPost("v1/api/orcamentos")]
-        public async Task<ActionResult> CreateOrcamento([FromBody] CreateOrcamentoDto model)
+        public async Task<ActionResult<Orcamento>> CreateOrcamentoAsync([FromBody] CreateOrcamentoDto model)
         {
             Orcamento orcamento = _mapper.Map<Orcamento>(model);
 
@@ -24,7 +24,7 @@ namespace Api.Controllers
             {
                 await _service.CreateOrcamento(orcamento);
 
-                return Created($"~v1/api/orcamentos/{orcamento.Id}", orcamento);
+                return Created($"v1/api/orcamentos/{orcamento.Id}", orcamento);
             }
             catch (DbUpdateException)
             {
@@ -37,7 +37,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("v1/api/orcamentos")]
-        public async Task<ActionResult> GetOrcamentos([FromQuery] int take = 100, int skip = 0)
+        public async Task<ActionResult<IEnumerable<Orcamento>>> GetOrcamentosAsync([FromQuery] int take = 100, int skip = 0)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("v1/api/orcamentos/{id:guid}")]
-        public async Task<ActionResult> GetByIdOrcamento(Guid id)
+        public async Task<ActionResult<Orcamento>> GetByIdOrcamentoAsync(Guid id)
         {
             try
             {
@@ -106,14 +106,14 @@ namespace Api.Controllers
             }
         }
 
-        [HttpPost("v1/api/orcamentos/addproduto")]
-        public async Task<ActionResult> AddProdutoOrcamento([FromBody] CreateProdutoDto model)
+        [HttpPost("v1/api/orcamentos/{id:guid}/addproduto")]
+        public async Task<ActionResult<Orcamento>> AddProdutoOrcamentoAsync([FromRoute] Guid id ,[FromBody] CreateProdutoDto model)
         {
             var produto = _mapper.Map<Produto>(model);
 
             try
             {
-                var orcamento = await _service.AddProdutoOrcamento(produto.OrcamentoId, produto);
+                var orcamento = await _service.AddProdutoOrcamento(id, produto);
 
                 return Ok(orcamento);
             }
@@ -129,7 +129,7 @@ namespace Api.Controllers
 
         [HttpDelete("v1/api/orcamentos/removeproduto/{id:guid}")]
 
-        public async Task<ActionResult> RemoveProdutoOrcamento([FromRoute] Guid id)
+        public async Task<ActionResult> RemoveProdutoOrcamentoAsync([FromRoute] Guid id)
         {
 
             try
