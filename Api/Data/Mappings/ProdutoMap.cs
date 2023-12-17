@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Data.Mappings;
+
 public class ProdutoMap : IEntityTypeConfiguration<Produto>
 {
     public void Configure(EntityTypeBuilder<Produto> builder)
@@ -71,6 +72,5 @@ public class ProdutoMap : IEntityTypeConfiguration<Produto>
             .WithMany(x => x.Produtos)
             .HasConstraintName("FK_Produto_Orcamento")
             .OnDelete(DeleteBehavior.Cascade);
-        
     }
 }

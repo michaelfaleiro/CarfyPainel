@@ -10,7 +10,6 @@ namespace Api.Services.Orcamentos
 
         public async Task<Orcamento> CreateOrcamento(Orcamento orcamento)
         {
-
             await _context.Orcamentos.AddAsync(orcamento);
             await _context.SaveChangesAsync();
 
@@ -19,12 +18,11 @@ namespace Api.Services.Orcamentos
 
         public async Task<Orcamento?> GetByIdOrcamento(Guid id)
         {
-
             var orcamento = await _context
-            .Orcamentos
-            .AsNoTracking()
-            .Include(x => x.Produtos)
-            .FirstOrDefaultAsync(x => x.Id == id);
+                .Orcamentos
+                .AsNoTracking()
+                .Include(x => x.Produtos)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
             return orcamento;
         }
@@ -41,12 +39,12 @@ namespace Api.Services.Orcamentos
             return orcamentos;
         }
 
-        public async Task<bool> RemoveOrcamento(Orcamento orcamento)
+        public async Task<Orcamento> RemoveOrcamento(Orcamento orcamento)
         {
             _context.Remove(orcamento);
             await _context.SaveChangesAsync();
 
-            return true;
+            return orcamento;
         }
 
         public async Task<Orcamento?> AddProdutoOrcamento(Guid id, Produto produto)
@@ -77,7 +75,7 @@ namespace Api.Services.Orcamentos
 
             _context.Produtos.Remove(produto);
             await _context.SaveChangesAsync();
-            
+
             return produto;
         }
     }

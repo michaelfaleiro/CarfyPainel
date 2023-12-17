@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Api.Data.Mappings;
+
 public class OrcamentoMap : IEntityTypeConfiguration<Orcamento>
 {
     public void Configure(EntityTypeBuilder<Orcamento> builder)
@@ -44,14 +45,8 @@ public class OrcamentoMap : IEntityTypeConfiguration<Orcamento>
             .IsRequired()
             .HasColumnName("DataCriacao")
             .HasColumnType("SMALLDATETIME");
-            
-
-        builder
-            .HasIndex(x => x.Cliente, "IX_Orcamento_Cliente")
-            .IsUnique();
 
         builder
             .HasMany(x => x.Produtos);
-            
     }
 }

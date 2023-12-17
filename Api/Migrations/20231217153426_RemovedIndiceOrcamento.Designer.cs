@@ -4,6 +4,7 @@ using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(DbApiContext))]
-    partial class DbApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231217153426_RemovedIndiceOrcamento")]
+    partial class RemovedIndiceOrcamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,70 +118,6 @@ namespace Api.Migrations
                     b.ToTable("Produto", (string)null);
                 });
 
-            modelBuilder.Entity("Api.Models.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VARCHAR")
-                        .HasColumnName("Name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role", (string)null);
-                });
-
-            modelBuilder.Entity("Api.Models.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(160)
-                        .HasColumnType("VARCHAR")
-                        .HasColumnName("Email");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("NVARCHAR")
-                        .HasColumnName("Name");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("VARCHAR")
-                        .HasColumnName("Password");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "Email" }, "IX_User_Email")
-                        .IsUnique();
-
-                    b.ToTable("User", (string)null);
-                });
-
-            modelBuilder.Entity("UserRole", b =>
-                {
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("RoleId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserRole");
-                });
-
             modelBuilder.Entity("Api.Models.Produto", b =>
                 {
                     b.HasOne("Api.Models.Orcamento", "Orcamento")
@@ -188,23 +127,6 @@ namespace Api.Migrations
                         .HasConstraintName("FK_Produto_Orcamento");
 
                     b.Navigation("Orcamento");
-                });
-
-            modelBuilder.Entity("UserRole", b =>
-                {
-                    b.HasOne("Api.Models.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_UserRole_RoleId");
-
-                    b.HasOne("Api.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_UserRole_UserId");
                 });
 
             modelBuilder.Entity("Api.Models.Orcamento", b =>

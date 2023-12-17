@@ -4,6 +4,7 @@ using Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Migrations
 {
     [DbContext(typeof(DbApiContext))]
-    partial class DbApiContextModelSnapshot : ModelSnapshot
+    [Migration("20231217165954_CorrigidoTableUser")]
+    partial class CorrigidoTableUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,10 +124,8 @@ namespace Api.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("VARCHAR")
+                    b.Property<int>("Name")
+                        .HasColumnType("INT")
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
@@ -140,8 +141,8 @@ namespace Api.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(160)
-                        .HasColumnType("VARCHAR")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("Email");
 
                     b.Property<string>("Name")
@@ -152,8 +153,8 @@ namespace Api.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("VARCHAR")
+                        .HasMaxLength(256)
+                        .HasColumnType("NVARCHAR")
                         .HasColumnName("Password");
 
                     b.HasKey("Id");
