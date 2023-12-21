@@ -15,6 +15,7 @@ namespace Api.Dtos.Produto
         public string? Marca { get; set; }
         public double PrecoCusto { get; set; } = 0;
         public double PrecoVenda { get; set; } = 0;
+        public Guid OrcamentoId { get; set; } = Guid.Empty;
         public string? Link { get; set; }
         public string? Observacao { get; set; }
     }

@@ -17,7 +17,7 @@ namespace Api.Controllers
         private readonly IMapper _mapper = mapper;
         private readonly IOrcamentoService _service = orcamentoService;
 
-        [Authorize(Roles = "user")]
+
         [HttpPost("v1/api/orcamentos")]
         public async Task<ActionResult<Orcamento>> CreateOrcamentoAsync([FromBody] CreateOrcamentoDto model)
         {
@@ -44,8 +44,8 @@ namespace Api.Controllers
             }
         }
 
-        [HttpPost("v1/api/orcamentos/{id:guid}/addproduto")]
-        public async Task<ActionResult<Orcamento>> AddProdutoOrcamentoAsync([FromRoute] Guid id, [FromBody] CreateProdutoDto model)
+        [HttpPost("v1/api/orcamentos/addproduto")]
+        public async Task<ActionResult<Orcamento>> AddProdutoOrcamentoAsync([FromBody] CreateProdutoDto model)
         {
             if (!ModelState.IsValid)
             {
@@ -54,9 +54,10 @@ namespace Api.Controllers
 
             var produto = _mapper.Map<Produto>(model);
 
+
             try
             {
-                var orcamento = await _service.AddProdutoOrcamento(id, produto);
+                var orcamento = await _service.AddProdutoOrcamento(model.OrcamentoId, produto);
                 if (orcamento is null)
                     return NotFound(new ResultViewModel<Orcamento>("Orcamento não encontrado"));
 
@@ -103,7 +104,7 @@ namespace Api.Controllers
                     return NotFound(new ResultViewModel<Orcamento>("Orçamento não encontrado"));
                 }
 
-                return Ok(new ResultViewModel<dynamic>(new { orcamento }));
+                return Ok(new ResultViewModel<dynamic>(orcamento));
             }
             catch (DbUpdateException)
             {
