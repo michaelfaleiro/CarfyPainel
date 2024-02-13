@@ -8,7 +8,7 @@ namespace Api.Services.Orcamentos
     {
         private readonly DbApiContext _context = context;
 
-        public async Task<Orcamento> CreateOrcamento(Orcamento orcamento)
+        public async Task<Orcamento> CriarOrcamento(Orcamento orcamento)
         {
             await _context.Orcamentos.AddAsync(orcamento);
             await _context.SaveChangesAsync();
@@ -16,7 +16,7 @@ namespace Api.Services.Orcamentos
             return orcamento;
         }
 
-        public async Task<Orcamento?> GetByIdOrcamento(Guid id)
+        public async Task<Orcamento?> BuscarOrcamentoId(Guid id)
         {
             var orcamento = await _context
                 .Orcamentos
@@ -27,7 +27,7 @@ namespace Api.Services.Orcamentos
             return orcamento;
         }
 
-        public async Task<List<Orcamento>> GetOrcamentos(int take, int skip)
+        public async Task<List<Orcamento>> BuscarOrcamentos(int take, int skip)
         {
             var orcamentos = await _context.Orcamentos
                 .AsNoTracking()
@@ -39,7 +39,15 @@ namespace Api.Services.Orcamentos
             return orcamentos;
         }
 
-        public async Task<Orcamento> RemoveOrcamento(Orcamento orcamento)
+        public async Task<Produto?> BuscarProdutoId(Guid id)
+        {
+            var produto = await _context.Produtos
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return produto;
+        }
+
+        public async Task<Orcamento> DeletarOrcamento(Orcamento orcamento)
         {
             _context.Remove(orcamento);
             await _context.SaveChangesAsync();
@@ -47,15 +55,13 @@ namespace Api.Services.Orcamentos
             return orcamento;
         }
 
-        public async Task<Orcamento?> AddProdutoOrcamento(Guid id, Produto produto)
+        public async Task<Orcamento?> AdicionarProdutoOrcamento(Guid id, Produto produto)
         {
             var orcamento = await _context.Orcamentos
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (orcamento is null)
-            {
                 return null;
-            }
 
             orcamento.Produtos?.Add(produto);
             await _context.SaveChangesAsync();
@@ -63,19 +69,31 @@ namespace Api.Services.Orcamentos
             return orcamento;
         }
 
-        public async Task<Produto?> RemoveProdutoOrcamento(Guid id)
+        public async Task<Produto?> RemoverProdutoOrcamento(Guid id)
         {
             var produto = await _context.Produtos
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (produto is null)
-            {
                 return null;
-            }
 
             _context.Produtos.Remove(produto);
             await _context.SaveChangesAsync();
 
+            return produto;
+        }
+
+        public async Task<Orcamento> EditarOrcamento(Orcamento orcamento)
+        {
+            _context.Orcamentos.Update(orcamento);
+            await _context.SaveChangesAsync();
+            return orcamento;
+        }
+
+        public async Task<Produto> EditarProdutoOrcamento(Produto produto)
+        {
+            _context.Produtos.Update(produto);
+            await _context.SaveChangesAsync();
             return produto;
         }
     }

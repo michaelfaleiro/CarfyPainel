@@ -24,9 +24,7 @@ namespace Api.Controllers
         public async Task<ActionResult<User>> CreateUserAsync([FromBody] CreateUserDto model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
-            }
 
             var user = _mapper.Map<User>(model);
 
@@ -57,9 +55,7 @@ namespace Api.Controllers
         public async Task<ActionResult<User>> Login([FromBody] LoginDto model)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
-            }
 
             var userLogin = _mapper.Map<User>(model);
 
@@ -86,9 +82,7 @@ namespace Api.Controllers
         public async Task<ActionResult> PostRole([FromBody] CreateRole model, [FromServices] DbApiContext context)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(new ResultViewModel<User>(ModelState.GetErrors()));
-            }
 
             var role = _mapper.Map<Role>(model);
 

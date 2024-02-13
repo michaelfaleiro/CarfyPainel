@@ -40,12 +40,6 @@ public class ProdutoMap : IEntityTypeConfiguration<Produto>
             .HasMaxLength(50);
 
         builder
-            .Property(x => x.PrecoCusto)
-            .IsRequired()
-            .HasColumnName("PrecoCusto")
-            .HasColumnType("MONEY");
-
-        builder
             .Property(x => x.PrecoVenda)
             .IsRequired()
             .HasColumnName("PrecoVenda")

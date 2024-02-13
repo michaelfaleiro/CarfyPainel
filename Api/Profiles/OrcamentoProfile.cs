@@ -9,6 +9,7 @@ namespace Api.Profiles
         public OrcamentoProfile()
         {
             CreateMap<CreateOrcamentoDto, Orcamento>();
+            CreateMap<UpdateOrcamentoDto, Orcamento>();
         }
     }
 }

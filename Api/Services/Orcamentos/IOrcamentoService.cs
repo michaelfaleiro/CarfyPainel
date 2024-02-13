@@ -4,16 +4,14 @@ namespace Api.Services.Orcamentos
 {
     public interface IOrcamentoService
     {
-        Task<Orcamento> CreateOrcamento(Orcamento orcamento);
-
-        Task<List<Orcamento>> GetOrcamentos(int take, int skip);
-
-        Task<Orcamento?> GetByIdOrcamento(Guid id);
-
-        Task<Orcamento> RemoveOrcamento(Orcamento orcamento);
-
-        Task<Orcamento?> AddProdutoOrcamento(Guid id, Produto produto);
-
-        Task<Produto?> RemoveProdutoOrcamento(Guid id);
+        Task<Orcamento> CriarOrcamento(Orcamento orcamento);
+        Task<List<Orcamento>> BuscarOrcamentos(int take, int skip);
+        Task<Orcamento?> BuscarOrcamentoId(Guid id);
+        Task<Produto?> BuscarProdutoId(Guid id);
+        Task<Orcamento> EditarOrcamento(Orcamento orcamento);
+        Task<Orcamento?> AdicionarProdutoOrcamento(Guid id, Produto produto);
+        Task<Produto> EditarProdutoOrcamento(Produto produto);
+        Task<Produto?> RemoverProdutoOrcamento(Guid id);
+        Task<Orcamento> DeletarOrcamento(Orcamento orcamento);
     }
 }
